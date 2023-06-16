@@ -145,8 +145,10 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
                 className={`${Style.arrow} ${isSidebarOpen ? Style.close : ''}`}
                 src="/right-arrow.png"
                 alt="right-arrow"
-                width={30}
-                height={47}
+                width={0}
+                height={0}
+                sizes='5vh'
+                style={{width:'auto',height:'auto'}}
               ></Image>
             </div>
           </div>
@@ -156,7 +158,7 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
           <input
             className={Style.searchInput}
             value={inputText}
-            onChange={handleChange}
+            // onChange={handleChange}
             onKeyUp={handleKeyPress}
             type="text"
             placeholder="Search..."
