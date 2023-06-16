@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Cybereason",
+    "url": "https://www.cybereason.com/",
+    "Description": "Cybereason is the champion for today’s cyber defenders with future-ready attack protection that extends from the endpoint, to the enterprise, to everywhere.",
+    "products": [
+      "EDR", 
+      "MDR", 
+      "XDR", 
+      "Zero Trust"
+    ]
+  },
+  {
+    "name": "Anomali",
+    "url": "https://www.anomali.com/",
+    "Description": "The security operations platform to transform security, productivity & reduce cost.",
+    "products": [
+      "Data", 
+      "Insights"
+    ]
+  },
+  {
+    "name":"Crowdstrike",
+    "url":"123",
+    "products": [
+        "EDR", 
+        "MDR", 
+        "XDR", 
+        "Zero Trust",
+      "Data", 
+      "Insights"
+    ]
+    
+  },
+  {
+    "name":"III",
+    "url":"456",
+    "products": [
+      "Data", 
+      "Insights"
+    ]
+  },
+  {
+    "name":"III",
+    "url":"456",
+    "products": [
+      "Data", 
+      "Insights"
+    ]
+  },
+  {
+    "name":"III",
+    "url":"456",
+    "products": [
+      "Data", 
+      "Insights"
+    ]
+  },
+  {
+    "name":"III",
+    "url":"456",
+    "products": [
+      "Data", 
+      "Insights"
+    ]
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "Detection Response": ["EDR","NDR","XDR","MDR"],
+  "Cloud": ["AWS","Elastic Search" ,"Server"],
+  "Threat Intelligence": ["Data","Insights"]
+}
