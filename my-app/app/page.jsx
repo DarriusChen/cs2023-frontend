@@ -95,11 +95,12 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
   function handleKeyPress(event) {
     if (event.key === 'Enter') {
       alert(inputText);
+      setInputText(event.target.value);
     }
   }
-  function handleChange(event) {
-    setInputText(event.target.value);
-  }
+  // function handleChange(event) {
+  //   setInputText(event.target.value);
+  // }
 
   //handle sidebar
   const toggleSidebar = () => {
@@ -129,7 +130,7 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
               </div>
             ))}
           </div>
-          <Link className={Style.delall} href={'#'} onClick={removeAllTags}>
+          <Link className={Style.delall} href={'#'} onClick={() => removeAllTags()}>
             Remove all
           </Link>
         </div>
