@@ -199,7 +199,7 @@
   width: 90%;
   height: 40%;
   display: flex;
-  justify-content: end;
+  justify-content: start;
 }
 
 .allCheck {
@@ -227,9 +227,29 @@
 
 }
 
+.compareComBtn {
+  margin: 0 5%;
+  width: 90%;
+  height: 40%;
+  display: flex;
+  justify-content: end;
+}
+
+.compare {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1% 3%;
+  background-color: #007a7e;
+  color: azure;
+  border-radius: 1vh;
+  height: 5vh;
+  width: fit-content;
+}
+
 .infoArea {
   width: 90%;
-  height: 20vh;
+  height: 60vh;
   margin: 0 5% 10% 5%;
   /* display: flex; */
   /* align-items: center; */
@@ -248,7 +268,7 @@
 }
 
 .companyBox:hover {
-  background-color: rgb(230, 226, 233);
+  background-color: rgb(226, 231, 235);
 }
 
 .coInfoArea {

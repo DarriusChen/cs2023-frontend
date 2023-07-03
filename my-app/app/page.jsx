@@ -7,6 +7,7 @@ import { ST } from 'next/dist/shared/lib/utils';
 import myData from './typedata.json' assert { type: 'json' };
 import company from './company.json' assert { type: 'json' };
 
+
 // sidebar controling
 const Sidebar = ({ isSidebarOpen, selectedTags, setSelectedTags }) => {
   // State to keep track of sidebar open/close
@@ -97,9 +98,7 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
       setInputText(event.target.value);
     }
   }
-  // function handleChange(event) {
-  //   setInputText(event.target.value);
-  // }
+
 
   //handle sidebar
   const toggleSidebar = () => {
@@ -115,34 +114,28 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
     setSelectedTags([]);
   };
 
-  // handel comparing products
-  const [compareList, setCompareList] = useState([]);
-  const handleCompareList = (item) => {
-    if (!compareList.includes(item)) {
-      setCompareList([...compareList, item]);
-    }
-  };
-
   // handle checkbox
-  const [isChecked, setIsChecked] = useState(Array(compareList.length).fill(false));
+  const [isChecked, setIsChecked] = useState(
+    // 先filter一次確定是依照tag選定的company來做select
+    selectedTags == 0
+      ? Array(company.length).fill(false)
+      : Array(company.filter((cinfo) => cinfo.products.some((i) => selectedTags.includes(i))).length).fill(false)
+  );
   const handleCheckList = (e, i) => {
-    console.log(e);
     const newIsChecked = isChecked.slice(); //create a new var and copy
     newIsChecked[i] = !isChecked[i];
     setIsChecked(newIsChecked);
   };
-
   // add or remove all comparing products
   const [isRemove, setRemove] = useState(false);
   const handleRmBtn = () => {
     setRemove(!isRemove);
     !isRemove
       ? setIsChecked(
-          selectedTags == 0
-            ? Array(company.length).fill(true)
-            : Array(company.filter((cinfo) => cinfo.products.some((i) => selectedTags.includes(i))).length).fill(true)
+          isChecked.fill(true)
         )
-      : setIsChecked([]);
+      : setIsChecked(isChecked.fill(false));
+      console.log(isChecked)
   };
 
   return (
@@ -207,11 +200,13 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
         <div className={Style.infoAreaTop}>
           <div className={Style.selectComBtn}>
             <Link href={'#'} className={`${!isRemove ? Style.allCheck : Style.removeCheck}`} onClick={handleRmBtn}>
-              {isRemove ? "Clear All" : "Select All"}
+              {isRemove ? 'Clear All' : 'Select All'}
             </Link>
-            {/* <Link href={'#'} className={Style.removeCheck} onClick={rmAllComProducts}>
-              Clear
-            </Link> */}
+          </div>
+          <div className={Style.compareComBtn}>
+            <Link href={'#'} className={Style.compare} onClick={()=> console.log(isChecked)}>
+              Let's go
+            </Link>
           </div>
         </div>
         <div className={Style.infoArea}>

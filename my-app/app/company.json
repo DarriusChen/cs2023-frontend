@@ -4,6 +4,43 @@
     "url": "https://www.cybereason.com/",
     "Description": "Cybereason is the champion for today’s cyber defenders with future-ready attack protection that extends from the endpoint, to the enterprise, to everywhere.",
     "products": [
+      "NDR",
+      "EDR", 
+      "MDR", 
+      "XDR", 
+      "Zero Trust"
+    ]
+  },
+  {
+    "name": "Cybereason",
+    "url": "https://www.cybereason.com/",
+    "Description": "Cybereason is the champion for today’s cyber defenders with future-ready attack protection that extends from the endpoint, to the enterprise, to everywhere.",
+    "products": [
+      "NDR",
+      "EDR", 
+      "MDR", 
+      "XDR", 
+      "Zero Trust"
+    ]
+  },
+  {
+    "name": "Cybereason",
+    "url": "https://www.cybereason.com/",
+    "Description": "Cybereason is the champion for today’s cyber defenders with future-ready attack protection that extends from the endpoint, to the enterprise, to everywhere.",
+    "products": [
+      "NDR",
+      "EDR", 
+      "MDR", 
+      "XDR", 
+      "Zero Trust"
+    ]
+  },
+  {
+    "name": "Cybereason",
+    "url": "https://www.cybereason.com/",
+    "Description": "Cybereason is the champion for today’s cyber defenders with future-ready attack protection that extends from the endpoint, to the enterprise, to everywhere.",
+    "products": [
+      "NDR",
       "EDR", 
       "MDR", 
       "XDR", 
@@ -18,6 +55,45 @@
       "Data", 
       "Insights"
     ]
+  },
+  {
+    "name":"Crowdstrike",
+    "url":"123",
+    "products": [
+        "EDR", 
+        "MDR", 
+        "XDR", 
+        "Zero Trust",
+      "Data", 
+      "Insights"
+    ]
+    
+  },
+  {
+    "name":"Crowdstrike",
+    "url":"123",
+    "products": [
+        "EDR", 
+        "MDR", 
+        "XDR", 
+        "Zero Trust",
+      "Data", 
+      "Insights"
+    ]
+    
+  },
+  {
+    "name":"Crowdstrike",
+    "url":"123",
+    "products": [
+        "EDR", 
+        "MDR", 
+        "XDR", 
+        "Zero Trust",
+      "Data", 
+      "Insights"
+    ]
+    
   },
   {
     "name":"Crowdstrike",
