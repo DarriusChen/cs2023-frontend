@@ -23,6 +23,7 @@
   /* padding: 0; */
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 3vw;
   width: 25%;
   
@@ -30,15 +31,14 @@
 
 .navItems {
   height: 90%;
-  width: 25%;
-  margin-right: 5%; /* Adjust the spacing between links */
+  width: 30%;
   align-items: center;
-  text-align: center;
   border-radius: 5px;
   /* background-color: #f4b31a; */
   font-weight: bolder;
   display: flex;
   justify-content: center;
+  font-size: large;
 }
 
 .navItems:hover {

@@ -24,7 +24,6 @@ const Sidebar = ({ isSidebarOpen, selectedTags, setSelectedTags }) => {
     if (!selectedTags.includes(tag)) {
       setSelectedTags([...selectedTags, tag]);
     }
-    // setSbInputValue('');
   };
 
   return (
@@ -116,6 +115,36 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
     setSelectedTags([]);
   };
 
+  // handel comparing products
+  const [compareList, setCompareList] = useState([]);
+  const handleCompareList = (item) => {
+    if (!compareList.includes(item)) {
+      setCompareList([...compareList, item]);
+    }
+  };
+
+  // handle checkbox
+  const [isChecked, setIsChecked] = useState(Array(compareList.length).fill(false));
+  const handleCheckList = (e, i) => {
+    console.log(e);
+    const newIsChecked = isChecked.slice(); //create a new var and copy
+    newIsChecked[i] = !isChecked[i];
+    setIsChecked(newIsChecked);
+  };
+
+  // add or remove all comparing products
+  const [isRemove, setRemove] = useState(false);
+  const handleRmBtn = () => {
+    setRemove(!isRemove);
+    !isRemove
+      ? setIsChecked(
+          selectedTags == 0
+            ? Array(company.length).fill(true)
+            : Array(company.filter((cinfo) => cinfo.products.some((i) => selectedTags.includes(i))).length).fill(true)
+        )
+      : setIsChecked([]);
+  };
+
   return (
     <div className={Style.mainRight}>
       {selectedTags.length != 0 ? (
@@ -147,12 +176,20 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
                 alt="right-arrow"
                 width={0}
                 height={0}
-                sizes='5vh'
-                style={{width:'auto',height:'auto'}}
+                sizes="5vh"
+                style={{ width: 'auto', height: 'auto' }}
               ></Image>
             </div>
           </div>
-          <div className={Style.filterAmount}>{`Total : ${company.length}`}</div>
+          <div className={Style.filterAmount}>{`Total : ${
+            selectedTags == 0
+              ? company.length
+              : company.filter((cinfo) => cinfo.products.some((i) => selectedTags.includes(i))).length
+          }`}</div>
+          <div className={Style.selectAmount}>{`Selected : ${isChecked.reduce((pre, cur) => {
+            if (cur) pre += 1;
+            return pre;
+          }, 0)}`}</div>
         </div>
         <div className={Style.searchBar}>
           <input
@@ -167,6 +204,16 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
         </div>
       </div>
       <div className={Style.companyArea}>
+        <div className={Style.infoAreaTop}>
+          <div className={Style.selectComBtn}>
+            <Link href={'#'} className={`${!isRemove ? Style.allCheck : Style.removeCheck}`} onClick={handleRmBtn}>
+              {isRemove ? "Clear All" : "Select All"}
+            </Link>
+            {/* <Link href={'#'} className={Style.removeCheck} onClick={rmAllComProducts}>
+              Clear
+            </Link> */}
+          </div>
+        </div>
         <div className={Style.infoArea}>
           {/* .reduce((cinfo)=> cinfo.products.filter(i=>selectedTags.includes(i))) */}
           {selectedTags.length > 0
@@ -174,29 +221,71 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
                 .filter((cinfo) => cinfo.products.some((i) => selectedTags.includes(i)))
                 .map(function (cInfo, i) {
                   return (
-                    <Link className={Style.companyBox} href={`/pages/company/${cInfo.name}`} key={i}>
-                      <div className={Style.cName} key={i}>
-                        {/* {cInfo.name} */}
-                        {<Image src={`/${cInfo.name}.png`} width={150} height={100} alt={cInfo.name}></Image>}
+                    <div className={Style.companyBox} key={i}>
+                      <div className={Style.coInfoArea}>
+                        <div className={Style.selectCo}>
+                          <input
+                            type="checkbox"
+                            name="checkbox"
+                            className={isChecked[i] ? Style.checked : ''}
+                            onChange={(e) => handleCheckList(e, i)}
+                          />
+                        </div>
+                        <div className={Style.cLogoName}>
+                          <Link href={`/pages/company/${cInfo.name}`} key={i}>
+                            {
+                              <Image
+                                src={`/${cInfo.name + '_logo'}.png`}
+                                width={0}
+                                height={0}
+                                sizes="6vh"
+                                style={{ width: 'auto', height: 'auto', borderRadius: '1vh' }}
+                                alt={cInfo.name}
+                              ></Image>
+                            }
+                          </Link>
+                          <Link href={`/pages/company/${cInfo.name}`} className={Style.cName}>
+                            {cInfo.name}
+                          </Link>
+                        </div>
                       </div>
-                    </Link>
+                    </div>
                   );
                 })
+            : // ? company
+              //     .filter((cinfo)=> cinfo.name.includes(inputText)).
 
-            // ? company
-            //     .filter((cinfo)=> cinfo.name.includes(inputText)).
-
-            : company.map(function (cInfo, i) {
+              company.map(function (cInfo, i) {
                 return (
-                  <Link className={Style.companyBox} href={`/pages/company/${cInfo.name}`} key={i}>
-                    <div className={Style.cName} key={i}>
-                      {/* {cInfo.name} */}
-                      {<Image src={`/${cInfo.name}.png`} width={150} height={100} alt={cInfo.name}></Image>}
+                  <div className={Style.companyBox} key={i}>
+                    <div className={Style.coInfoArea}>
+                      <div className={Style.selectCo}>
+                        <input
+                          type="checkbox"
+                          name="checkbox"
+                          className={isChecked[i] ? Style.checked : ''}
+                          onChange={(e) => handleCheckList(e, i)}
+                        />
+                      </div>
+                      <div className={Style.cLogoName}>
+                        <Link href={`/pages/company/${cInfo.name}`} key={i}>
+                          {
+                            <Image
+                              src={`/${cInfo.name + '_logo'}.png`}
+                              width={0}
+                              height={0}
+                              sizes="6vh"
+                              style={{ width: 'auto', height: 'auto', borderRadius: '1vh' }}
+                              alt={cInfo.name}
+                            ></Image>
+                          }
+                        </Link>
+                        <Link href={`/pages/company/${cInfo.name}`} className={Style.cName}>
+                          {cInfo.name}
+                        </Link>
+                      </div>
                     </div>
-                    {/* <div>
-                      {cInfo.products.map(function())}
-                    </div> */}
-                  </Link>
+                  </div>
                 );
               })}
         </div>
