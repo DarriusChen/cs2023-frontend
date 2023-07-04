@@ -393,6 +393,10 @@ input.checked:before {
   font-size: 1.8vmin;
 }
 
+.tag:hover {
+  border-color: #f9f9f9;
+}
+
 .tagtext {
   padding-right: 10px;
   display: flex;
@@ -405,6 +409,10 @@ input.checked:before {
   color: #e8e6e3;
   font-weight: 700;
   
+}
+
+.deltag:hover {
+  cursor: pointer;
 }
 
 .delall {
