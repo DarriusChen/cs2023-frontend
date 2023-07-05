@@ -145,14 +145,17 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
     setIsChecked(newIsChecked);
   };
   console.log(isChecked);
+
   // add or remove all comparing products
-  const [isRemove, setRemove] = useState(Array(productList.length).fill(false));
+  const [isRemove, setRemove] = useState(Array(companysByProducts.length).fill(false));
   const handleRmBtn = (i) => {
-    console.log(i);
-    setRemove(!isRemove[i]);
+    const newIsRemove = isRemove.slice();
+    newIsRemove[i]=!isRemove[i];
+    setRemove(newIsRemove);
     !isRemove[i] ? setIsChecked(isChecked.fill(true)) : setIsChecked(isChecked.fill(false));
-    console.log(isChecked);
   };
+
+  // make users not able to select two or more types of products
 
   return (
     <div className={Style.mainRight}>
@@ -230,17 +233,17 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
           {selectedTags.length > 0
             ? companysByProducts
                 .filter((info) => selectedTags.includes(info.tag))
-                .map((data, i) => (
+                .map((data, indexOfProductArea) => (
                   <div className={Style.eachProductArea}>
                     <div className={Style.tagNameNSelect}>
                       <div className={Style.eachProduct}>{data.tag}</div>
                       <div className={Style.selectComBtn}>
                         <Link
                           href={'#'}
-                          className={`${!isRemove[i] ? Style.allCheck : Style.removeCheck}`}
-                          onClick={() => handleRmBtn(i)}
+                          className={`${!isRemove[indexOfProductArea] ? Style.allCheck : Style.removeCheck}`}
+                          onClick={() => handleRmBtn(indexOfProductArea)}
                         >
-                          {isRemove[i] ? 'Clear All' : 'Select All'}
+                          {isRemove[indexOfProductArea] ? 'Clear All' : 'Select All'}
                         </Link>
                       </div>
                     </div>
@@ -257,7 +260,7 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
                                         type="checkbox"
                                         name="checkbox"
                                         className={isChecked[i] ? Style.checked : ''}
-                                        onChange={(e) => handleCheckList(e, i)}
+                                        onChange={(e) => handleCheckList(e,indexOfProductArea, i)}
                                       />
                                     </div>
                                     <div className={Style.cLogoName}>
