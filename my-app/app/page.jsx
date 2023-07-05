@@ -33,7 +33,6 @@ const Sidebar = ({ isSidebarOpen, selectedTags, setSelectedTags }) => {
 
   const [isGroupOpen, setIsGroupOpen] = useState(Array(Object.keys(myData).length).fill(false));
   function handleClickGroup(i) {
-    // console.log(i)
     const newIsGroupOpen = isGroupOpen.slice(); //create a new var and copy
     newIsGroupOpen[i] = !isGroupOpen[i];
     setIsGroupOpen(newIsGroupOpen);
@@ -134,29 +133,47 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
 
   // handle checkbox
   const [isChecked, setIsChecked] = useState(companysByProducts.map((data) => data.companies_selected));
-  console.log(isChecked);
   const handleCheckList = (e, indexOfProductArea, indexOfEachCom) => {
-    console.log(e, indexOfProductArea, indexOfEachCom);
-    const newIsChecked = isChecked.slice(); //create a new var and copy
-    newIsChecked[indexOfProductArea][indexOfEachCom] = !isChecked[indexOfProductArea][indexOfEachCom];
-    setIsChecked(newIsChecked);
-    // 如果該區的check裡面有true的話，把該區的selected改成true
-    isChecked[indexOfProductArea].includes(true)
-      ? (companysByProducts[indexOfProductArea].selected = true)
-      : (companysByProducts[indexOfProductArea].selected = false);
-    // 如果有兩個重複的product area都有被選取，要跳alert
-    
+    if (
+      companysByProducts.filter((data, index) => {
+        return index != indexOfProductArea && data.selected == true;
+      }).length > 0
+    ) {
+      // 如果有兩個重複的product area都有被選取，要跳alert
+      alert('不能同時選取多種產品類別，！請重新選擇！');
+    } else {
+      const newIsChecked = isChecked.slice(); //create a new var and copy
+      newIsChecked[indexOfProductArea][indexOfEachCom] = !isChecked[indexOfProductArea][indexOfEachCom];
+      setIsChecked(newIsChecked);
+      // 如果該區的check裡面有true的話，把該區的selected改成true
+      isChecked[indexOfProductArea].includes(true)
+        ? (companysByProducts[indexOfProductArea].selected = true)
+        : (companysByProducts[indexOfProductArea].selected = false);
+    }
   };
 
   // add or remove all comparing products
   const [isRemove, setRemove] = useState(Array(companysByProducts.length).fill(false));
   const handleRmBtn = (indexOfProductArea) => {
-    const newIsRemove = isRemove.slice();
-    newIsRemove[indexOfProductArea] = !isRemove[indexOfProductArea];
-    setRemove(newIsRemove);
-    !isRemove[indexOfProductArea]
-      ? (isChecked[indexOfProductArea] = isChecked[indexOfProductArea].fill(true))
-      : (isChecked[indexOfProductArea] = isChecked[indexOfProductArea].fill(false));
+    if (
+      companysByProducts.filter((data, index) => {
+        return index != indexOfProductArea && data.selected == true;
+      }).length > 0
+    ) {
+      // 如果有兩個重複的product area都有被選取，要跳alert
+      alert('不能同時選取多種產品類別，！請重新選擇！');
+    } else {
+      const newIsRemove = isRemove.slice();
+      newIsRemove[indexOfProductArea] = !isRemove[indexOfProductArea];
+      setRemove(newIsRemove);
+      if (!isRemove[indexOfProductArea]) {
+        isChecked[indexOfProductArea] = isChecked[indexOfProductArea].fill(true);
+        companysByProducts[indexOfProductArea].selected = true;
+      } else {
+        isChecked[indexOfProductArea] = isChecked[indexOfProductArea].fill(false);
+        companysByProducts[indexOfProductArea].selected = false;
+      }
+    }
   };
 
   // make users not able to select two or more types of products
