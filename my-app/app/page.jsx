@@ -140,7 +140,7 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
       }).length > 0
     ) {
       // 如果有兩個重複的product area都有被選取，要跳alert
-      alert('不能同時選取多種產品類別，！請重新選擇！');
+      alert('不能同時選取多種產品類別，請重新選擇！');
     } else {
       const newIsChecked = isChecked.slice(); //create a new var and copy
       newIsChecked[indexOfProductArea][indexOfEachCom] = !isChecked[indexOfProductArea][indexOfEachCom];
