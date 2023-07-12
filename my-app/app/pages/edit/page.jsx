@@ -1,58 +1,40 @@
-'use client'
-
+'use client';
+import Link from 'next/link';
+import Image from 'next/image';
 import React, { useState } from 'react';
+import Estyle from '../../styles/edit.module.css';
+import cdata from '../../company.json';
 
-const TagSelector = () => {
-const myArray = ["one", "two", "three", "four", "five"]
-const s1 = [["two", "seven"]]
-const s2 = ["zero", "ten"]
-
-let result1 = s1.filter(ele=>ele.filter(i => myArray.includes(i)))
-// result1 = true
-
-let result2 = s2.some(i => myArray.includes(i))
-  console.log(result1)
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [inputValue, setInputValue] = useState('');
-
-  const handleTagClick = (tag) => {
-    setSelectedTags([...selectedTags, tag]);
-    setInputValue('');
-  };
-
-  const handleRemoveTag = (tag) => {
-    setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
-  };
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleInputKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleTagClick(inputValue.trim());
-    }
-  };
-
+export default function Edit() {
   return (
-    <div>
-      <div>
-        {selectedTags.map((tag, index) => (
-          <div key={index} className="tag">
-            {tag}
-            <button onClick={() => handleRemoveTag(tag)}>X</button>
-          </div>
-        ))}
+    <div className={Estyle.main}>
+      <div className={Estyle.mainArea}>
+        <div className={Estyle.searchNAdd}>
+          <input type="text" placeholder="Search..." className={Estyle.inputArea}></input>
+          <Link href={'#'} className={Estyle.searchIcon}>
+            <Image
+              src="/search.svg"
+              width={0}
+              height={0}
+              sizes="2vh"
+              style={{ width: '3vh', height: 'auto' }}
+              alt="search"
+            ></Image>
+          </Link>
+          <Link href={'#'} className={Estyle.addNew}>
+            Add
+          </Link>
+        </div>
+        <div className={Estyle.companyArea}>
+          {cdata.map((data, i) => (
+            <div key={i} className={Estyle.company}>
+              <div className={Estyle.cNAME}>{data.name}</div>
+              <Link href={data.url} className={Estyle.cURL}>{data.url}</Link>
+              <div className={Estyle.cProducts}>{data.products.map((p)=>(p+', '))}</div>
+            </div>
+          ))}
+        </div>
       </div>
-      <input
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        onKeyUp={handleInputKeyPress}
-        placeholder="Type and press Enter to add tags"
-      />
     </div>
   );
-};
-
-export default TagSelector;
+}

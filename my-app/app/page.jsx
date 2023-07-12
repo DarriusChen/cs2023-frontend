@@ -112,8 +112,8 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
 
   function handleKeyPress(event) {
     if (event.key === 'Enter') {
-      alert(inputText);
       setInputText(event.target.value);
+      alert(event.target.value);
     }
   }
 
@@ -230,8 +230,6 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
         <div className={Style.searchBar}>
           <input
             className={Style.searchInput}
-            value={inputText}
-            // onChange={handleChange}
             onKeyUp={handleKeyPress}
             type="text"
             placeholder="Search..."

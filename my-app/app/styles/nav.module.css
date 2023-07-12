@@ -17,21 +17,21 @@
 }
 
 .nav-links {
-  gap: 10px;
+  gap: 3vh;
   list-style-type: none;
-  margin-right: 0;
+  margin-right: 5%;
   /* padding: 0; */
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 3vw;
-  width: 25%;
+  width: 15%;
   
 }
 
 .navItems {
   height: 90%;
-  width: 30%;
+  width: 30vh;
   align-items: center;
   border-radius: 5px;
   /* background-color: #f4b31a; */

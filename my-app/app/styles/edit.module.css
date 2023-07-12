@@ -1,0 +1,82 @@
+
+.main {
+    height: 100%;
+    background-color: #f1efdc;
+    
+}
+
+.mainArea {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 10%;
+    background-color: rgb(228, 241, 241);
+    min-height: 100%;
+}
+
+.searchNAdd {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 80%;
+    height: 10%;
+    margin: 2% 0;
+}
+
+.inputArea{
+    width: 30%;
+    height: 4vh;
+    border-radius: 0.5vh;
+    padding: 0 2%;
+    outline-color: rgb(106, 160, 172);
+    border: 0.25vh solid rgb(184, 184, 184);
+}
+
+.searchIcon {
+    display: flex;
+    align-items: center;
+    background-color: rgb(253, 253, 253);
+    border: 0.3vh solid rgba(121, 87, 160, 0.807);
+    border-radius: 0.5vh;
+    margin-left: 1%;
+}
+
+.addNew {
+    display: flex;
+    align-items: center;
+    margin-left: 3%;
+    background-color: rgba(28, 88, 161, 0.694);
+    color: aliceblue;
+    padding: 1.5%;
+    border-radius: 0.5vh;
+}
+
+.companyArea {
+    display: flex;
+    flex-wrap: wrap;
+    height: fit-content;
+    overflow: hidden;
+    justify-content: center;
+    width: 100%;
+}
+
+.company {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 80%;
+    height: auto;
+    background-color: #ffffff;
+    padding: 1% 0 1% 1%;
+    border-bottom: 0.3vh solid #7f6e6e83;
+    border-radius: 0.5vh 0.5vh 0 0;
+    color:rgba(7, 32, 61, 0.646)
+}
+
+.cURL {
+    text-decoration: underline;
+}
+
+.cURL:hover {
+    color: rgba(132, 79, 207, 0.518);
+}

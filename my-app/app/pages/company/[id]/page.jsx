@@ -5,7 +5,8 @@ import Link from 'next/link';
 
 export default function Importdata({ params: { id } }) {
   //get the company info
-  const info = Cdata.filter((ele) => ele.name == id)[0];
+  const info = Cdata.filter((ele) => ele.name == id)[0]; 
+  // filter the data to make it remain only the data whose company's name = id
   return (
     <div className={Cstyle.main}>
       <div className={Cstyle.intro}>
@@ -13,6 +14,14 @@ export default function Importdata({ params: { id } }) {
           {id}
         </Link>
         <div className={Cstyle.desc}>{info.Description}</div>
+      </div>
+      <div className={Cstyle.products}>
+        Products: &emsp;
+        {info.products.map((tag)=>(
+          <div className={Cstyle.tag}>
+            {tag}
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -28,9 +28,9 @@ function Render(isOriginPageClik){
         <Link href="/" className={navStyles.navItems}>
           Home
         </Link>
-        <Link href="/pages/importdata" className={navStyles.navItems}>
+        {/* <Link href="/pages/importdata" className={navStyles.navItems}>
           Import
-        </Link>
+        </Link> */}
         <Link href="/pages/edit" className={navStyles.navItems}>
           Edit
         </Link>
