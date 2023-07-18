@@ -1,82 +1,155 @@
-
 .main {
-    height: 100%;
-    background-color: #f1efdc;
-    
+  min-height: 100vh;
+  background-color: #f1efdc;
 }
 
 .mainArea {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 0 10%;
-    background-color: rgb(228, 241, 241);
-    min-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 10%;
+  background-color: rgb(228, 241, 241);
+  min-height: 100vh;
 }
 
 .searchNAdd {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    width: 80%;
-    height: 10%;
-    margin: 2% 0;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 80%;
+  height: 15%;
+  margin: 2% 0;
 }
 
-.inputArea{
-    width: 30%;
-    height: 4vh;
-    border-radius: 0.5vh;
-    padding: 0 2%;
-    outline-color: rgb(106, 160, 172);
-    border: 0.25vh solid rgb(184, 184, 184);
+.inputArea {
+  width: 30%;
+  height: 5vh;
+  border-radius: 0.5vh;
+  padding: 0 2%;
+  outline-color: rgb(106, 160, 172);
+  border: 0.25vh solid rgb(184, 184, 184);
 }
 
 .searchIcon {
-    display: flex;
-    align-items: center;
-    background-color: rgb(253, 253, 253);
-    border: 0.3vh solid rgba(121, 87, 160, 0.807);
-    border-radius: 0.5vh;
-    margin-left: 1%;
+  display: flex;
+  align-items: center;
+  background-color: rgb(253, 253, 253);
+  border: 0.3vh solid rgba(121, 87, 160, 0.807);
+  border-radius: 0.5vh;
+  margin-left: 1%;
 }
 
 .addNew {
-    display: flex;
-    align-items: center;
-    margin-left: 3%;
-    background-color: rgba(28, 88, 161, 0.694);
-    color: aliceblue;
-    padding: 1.5%;
-    border-radius: 0.5vh;
+  display: flex;
+  align-items: center;
+  margin-left: 3%;
+  background-color: rgba(28, 88, 161, 0.694);
+  color: aliceblue;
+  padding: 1vh;
+  border-radius: 0.5vh;
+}
+
+.addNew:hover {
+    background-color: rgb(146, 74, 29);
+}
+
+.headerArea {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 2fr 0.7fr;
+  gap: 10px;
+  width: 80%;
+  padding: 1vh;
+}
+
+.header {
+  display: flex;
+  justify-content: start;
+  font-weight: bolder;
 }
 
 .companyArea {
-    display: flex;
-    flex-wrap: wrap;
-    height: fit-content;
-    overflow: hidden;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  height: fit-content;
+  overflow: hidden;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 3%;
 }
 
 .company {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    width: 80%;
-    height: auto;
-    background-color: #ffffff;
-    padding: 1% 0 1% 1%;
-    border-bottom: 0.3vh solid #7f6e6e83;
-    border-radius: 0.5vh 0.5vh 0 0;
-    color:rgba(7, 32, 61, 0.646)
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 2fr 0.7fr;
+  gap: 10px;
+  width: 80%;
+  height: auto;
+  background-color: #ffffff;
+  padding: 1vh;
+  border-top: 0.3vh solid #7f6e6e83;
+  border-radius: 0.5vh 0.5vh 0 0;
+  color: rgba(7, 32, 61, 0.646);
+}
+
+.cNAME {
+  display: flex;
+  align-items: center;
+}
+
+.cNAME:hover {
+    color: rgba(122, 61, 150, 0.513);
 }
 
 .cURL {
-    text-decoration: underline;
+  text-decoration: underline;
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.cProducts {
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+}
+
+.eachProduct {
+  word-break: keep-all;
+  text-align: center;
+  padding: 2%;
+  background-color: rgba(236, 212, 196, 0.785);
+  border-radius: 0.5vh;
+  width: fit-content;
+  height: fit-content;
+  margin-right: 1.5%;
+  white-space: nowrap;
 }
 
 .cURL:hover {
-    color: rgba(132, 79, 207, 0.518);
+  color: rgba(107, 58, 176, 0.518);
+}
+
+.crud {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 1vh;
+}
+
+.crudBtn {
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 1vh;
+  background-color: rgba(4, 81, 76, 0.446);
+  color: white;
+  border-radius: 0.5vh;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.crudBtn:hover {
+  background-color: rgba(161, 211, 200, 0.72);
+  color: rgba(6, 62, 86, 0.829);
 }

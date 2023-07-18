@@ -29,7 +29,7 @@ export default function Importdata({ params: { id } }) {
 
 // 預先render (路徑)
 export async function generateStaticParams() {
-  const posts = await fetch('http://localhost:3000/company.json').then((res) => {
+  const posts = await fetch('192.168.70.89').then((res) => {
     res.json();
   });
   return posts.map((post) => ({
