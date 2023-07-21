@@ -48,30 +48,45 @@
   color: rgba(8, 45, 105, 0.812);
 }
 
+
+.closeBtn {
+  position: relative;
+  top: -5vh;
+  left: 35vh;
+  background-color: rgba(238, 216, 188, 0.762);
+  border-radius: 50%;
+  opacity: 70%;
+}
+
+.closeBtn:hover {
+  background-color: rgb(254, 254, 254);
+  cursor: pointer;
+}
+
 .uploadForm {
-  margin-top: 2%;
+  /* margin-top: 1%; */
   width: 100%;
-  height: 50%;
+  height: 80%;
 }
 
 .eachForm {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 5%;
+  margin-bottom: 3%;
   /* width: 80vh; */
-  height: 10%;
+  height: 10vh;
   /* margin-left: 5vh; */
 }
 
 .eachTitle {
-    display: flex;
-    align-items: center;
-    width: 10vh;
+  display: flex;
+  align-items: center;
+  width: 10vh;
 }
 
 .input {
-    margin-left: 2vh;
+  margin-left: 2vh;
   border: 0.2rem rgba(176, 175, 175, 0.836) solid;
   outline-color: rgb(106, 160, 172);
   border-radius: 0.3rem;
@@ -81,16 +96,78 @@
 }
 
 .selectInput {
-    margin-left: 2vh;
-    width: 40vh;
+  margin-left: 2vh;
+  width: 40vh;
 }
 
 .fileInput {
-    margin-left: 2vh;
-    width: 40vh;
+  display: flex;
+  align-items: center;
+  margin-left: 2vh;
+  width: 40vh;
+}
+
+.uploadBtn {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 0.5vh;
+  background-color: rgba(93, 179, 164, 0.992);
+  color: white;
+  padding: 0.5vh;
+  font-size: small;
+}
+
+.uploadBtn:hover {
+  cursor: pointer;
+  background-color: white;
+  color: rgba(93, 179, 164, 0.992);
 }
 
 .option:hover,
 .active {
   background-color: lightblue;
+}
+
+.submitContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.submitArea {
+  display: flex;
+  justify-content: end;
+  width: 52vh;
+}
+
+.submit {
+  width: 7vh;
+  height: 3vh;
+  background-color: rgba(19, 73, 124, 0.863);
+  color: white;
+  border-radius: 0.5vh;
+  cursor: pointer;
+  border: none;
+  transition: all 300ms cubic-bezier(0.13, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+.submit:disabled {
+  pointer-events: none;
+}
+
+.submit:hover {
+  box-shadow: rgba(78, 76, 76, 0.25) 0 4px 15px;
+  transform: translateY(-2px);
+}
+
+.submit:active {
+  box-shadow: none;
+  transform: translateY(0);
 }

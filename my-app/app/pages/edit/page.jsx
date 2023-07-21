@@ -5,23 +5,36 @@ import React, { useState } from 'react';
 import Estyle from '../../styles/edit.module.css';
 import Astyle from '../../styles/newdata.module.css';
 import cdata from '../../company.json';
-import tdata from '../../typedata.json'
+import tdata from '../../typedata.json';
 import CreatableSelect from 'react-select/creatable'; // react套件
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFile } from '@fortawesome/free-regular-svg-icons';
 // import { cache } from 'react';
 
 async function getCompanyData() {
-  // const res = await fetch('http://192.168.70.89:8000/').then((res) => res.json());
-  // The return value is *not* serialized
+  // const res = await fetch('http://192.168.70.134:8000/');
+  // // The return value is *not* serialized
   // if (!res.ok) {
   //   // This will activate the closest `error.js` Error Boundary
   //   throw new Error('Failed to fetch data');
   // }
-  // return res;
+
+  // const result = await res.json().then((data)=>data);
+
+  // return result;
 }
 
 export default function Edit() {
-  const response = getCompanyData();
+  const response = getCompanyData().then((data)=>({"data":data}));
+  const data = response["data"]
   console.log(response);
+
+  //控制頁面要不要跳出
+  const [isShowAddPage, setShowAddPage] = useState(false);
+  const handleShowPage = () => {
+    setShowAddPage(true);
+    // console.log(isShowAddPage);
+  };
 
   return (
     <div className={Estyle.main}>
@@ -65,54 +78,103 @@ export default function Edit() {
                 ))}
               </div>
               <div className={Estyle.crud}>
-                <button className={Estyle.crudBtn}>Edit</button>
+                <button className={Estyle.crudBtn} onClick={() => handleShowPage()}>
+                  Edit
+                </button>
                 <button className={Estyle.crudBtn}>Add</button>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <EditPage />
+      <EditPage isShowAddPage={isShowAddPage} setShowAddPage={setShowAddPage} />
     </div>
   );
 }
 
-function EditPage() {
-  const showAddPage = useState(false);
-  const comName = cdata.map((data) => {return {"value":data.name,"label":data.name}})
-  const productsData = Object.keys(tdata)
+function EditPage({ isShowAddPage, setShowAddPage }) {
+  const handleClosePage = () => {
+    setShowAddPage(false);
+    console.log(isShowAddPage);
+  };
+
+  // data processing -> to fit the data format of the react library
+  const comName = cdata.map((data) => {
+    return { value: data.name, label: data.name };
+  });
+  const productsData = Object.keys(tdata).map((key) => ({
+    label: key,
+    options: tdata[key].map((data) => ({ value: data, label: data }))
+  }));
+
+  // alert after file uploaded
+  const fileUploader = document.getElementById('#file-uploader');
+  console.log(fileUploader)
+
+  // 存form的變數們
+  const [cMessage,setcMessage] = useState({"name": '',"url":'',"Description":'',"products":''})
+  const handleCompanyMessage = () => {
+    setcMessage()
+  }
 
   return (
-    <div className={Astyle.newMain}>
+    <div className={isShowAddPage ? Astyle.newMain : Astyle.closeMain}>
       <div className={Astyle.pageArea}>
         <div className={Astyle.titleArea}>
           <div className={Astyle.title}>UPLOAD NEW DATA</div>
-          <div className={Astyle.tdesc}>請根據想上傳之公司名稱填入對應資訊</div>
+          <div className={Astyle.tdesc}>請根據以下欄位填入對應的公司資訊</div>
         </div>
+        <div className={Astyle.closeBtnArea} style={{ height: '0' }}>
+          <Image
+            src={'/close.svg'}
+            alt="close"
+            width={0}
+            height={0}
+            style={{ width: 'auto', height: 'auto' }}
+            className={Astyle.closeBtn}
+            onClick={() => handleClosePage()}
+          />
+        </div>
+
         <div className={Astyle.uploadForm}>
-          <div className={Astyle.eachForm}>
+          <div className={Astyle.eachForm} style={{ margin: '0' }}>
             <div className={Astyle.eachTitle}>Name: </div>
-            {/* <input type='text' list='companies' className={Astyle.input}></input>
-            <datalist id='companies'>
-              {cdata.map((data)=><option className={Astyle.option} value={data.name}></option>)}
-            </datalist> */}
-            <CreatableSelect className={Astyle.selectInput} isClearable options={comName} />
+            <CreatableSelect
+              className={Astyle.selectInput}
+              isClearable
+              options={comName}
+              placeholder="Select or Create..."
+              // value={cNameMessage}
+              // onChange={setcNameMessage()}
+            />
           </div>
           <div className={Astyle.eachForm}>
             <div className={Astyle.eachTitle}>Link: </div>
-            <input type="text" className={Astyle.input}></input>
+            <input type="url" className={Astyle.input} ></input>
           </div>
-          <div className={Astyle.eachForm} style={{height:"20vh",alignItems:"start"}}>
+          <div className={Astyle.eachForm} style={{ height: '20vh', alignItems: 'start' }}>
             <div className={Astyle.eachTitle}>Description: </div>
-            <textarea className={Astyle.input} style={{height:"20vh",padding:"1vh"}}></textarea>
+            <textarea className={Astyle.input} style={{ height: '20vh', padding: '1vh' }} ></textarea>
           </div>
           <div className={Astyle.eachForm}>
             <div className={Astyle.eachTitle}>Products: </div>
-            <CreatableSelect className={Astyle.selectInput} isClearable options={products} />
+            <CreatableSelect className={Astyle.selectInput} isClearable options={productsData} />
           </div>
-          <div className={Astyle.eachForm}>
+          <div className={Astyle.eachForm} style={{ marginBottom: '0' }}>
             <div className={Astyle.eachTitle}>Upload DM: </div>
-            <input type="file" className={Astyle.fileInput} />
+            {/* <input type="file" className={Astyle.fileInput} /> */}
+            <div className={Astyle.fileInput}>
+              <label className={Astyle.uploadBtn}>
+                <input id="file-uploader" style={{ display: 'none' }} type="file" accept="image/*" multiple/>
+                <FontAwesomeIcon icon={faFile} style={{ marginRight: '0.5vh' }} />
+                上傳圖片
+              </label>
+            </div>
+          </div>
+          <div className={Astyle.submitContainer}>
+            <div className={Astyle.submitArea}>
+              <button className={Astyle.submit}>Submit</button>
+            </div>
           </div>
         </div>
       </div>
