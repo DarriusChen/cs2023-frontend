@@ -222,10 +222,15 @@ function MainProducts({ isSidebarOpen, setIsSidebarOpen, selectedTags, setSelect
               ? company.length
               : company.filter((cinfo) => cinfo.products.some((i) => selectedTags.includes(i))).length
           }`}</div>
-          <div className={Style.selectAmount}>{`Selected : ${isChecked.reduce((pre, cur) => {
-            if (cur) pre += 1;
-            return pre;
-          }, 0)}`}</div>
+          <div className={Style.selectAmount}>{`Selected : ${
+            companysByProducts
+              .filter((data) => {
+                if (data.selected == true) {
+                  return data.companies_selected;
+                }
+              })
+              .filter((data) => data == true).length
+          }`}</div>
         </div>
         <div className={Style.searchBar}>
           <input
