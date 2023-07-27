@@ -15,6 +15,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
+    "file-system": "^2.2.2",
     "next": "13.4.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -29,5 +30,11 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
   }
+  
 }
