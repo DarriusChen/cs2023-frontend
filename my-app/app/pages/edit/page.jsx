@@ -11,7 +11,7 @@ import dynamic from 'next/dynamic'; // lazy loading->先不要rendor直到client
 const EditPage = dynamic(() => import('../../components/changeData'), { ssr: false }); // import edit component 並且使用lazy loading
 
 async function getCompanyData() {
-  // const res = await fetch('http://192.168.70.134:8000/');
+  // const res = await fetch('http://192.168.70.134:8000/getCompanyData');
   // // The return value is *not* serialized
   // if (!res.ok) {
   //   // This will activate the closest `error.js` Error Boundary
@@ -31,6 +31,7 @@ export default function Edit() {
   const [companyData, setCompanyData] = useState({ name: '', url: '', desc: '', products: '' });
   const handleShowPage = (name, url, desc, products) => {
     const productsOptions = products.map((data) => ({ value: data, label: data }));
+    setCompanyData({ name: '', url: '', desc: '', products: '' });
     setCompanyData({ name: { value: name, label: name }, url: url, desc: desc, products: productsOptions });
     setShowAddPage(true);
   };
