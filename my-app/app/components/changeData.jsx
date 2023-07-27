@@ -73,13 +73,14 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
               options={comName}
               placeholder="Select or Create..."
               defaultValue={cname}
+              id="company_name"
               // value={}
               // onChange={()=>handleChange()}
             />
           </div>
           <div className={Astyle.eachForm}>
             <div className={Astyle.eachTitle}>Link: </div>
-            <input type="url" className={Astyle.input} defaultValue={companyData['url']}></input>
+            <input type="url" className={Astyle.input} defaultValue={companyData['url']} id="company_url"></input>
           </div>
           <div className={Astyle.eachForm} style={{ height: '20vh', alignItems: 'start' }}>
             <div className={Astyle.eachTitle}>Description: </div>
@@ -87,6 +88,7 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
               className={Astyle.input}
               style={{ height: '20vh', padding: '1vh' }}
               defaultValue={companyData['desc']}
+              id="company_desc"
             ></textarea>
           </div>
           <div className={Astyle.eachForm}>
@@ -97,6 +99,7 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
               isMulti
               options={productsData}
               defaultValue={cproducts}
+              id="company_products"
             />
           </div>
           <div className={Astyle.eachForm} style={{ marginBottom: '0' }}>
