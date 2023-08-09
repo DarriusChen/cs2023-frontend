@@ -4,18 +4,14 @@ import navStyles from './styles/nav.module.css';
 import styles from './styles/page.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Router } from 'next/router';
-import {useState} from 'react'
-
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 //write a navigator component
 //I want this navigator component to be Responsive Web Design
 export default function Nav() {
-
-const[isOriginPageClik,setIsOriginPageClik] = useState(true)
-function Render(isOriginPageClik){
- 
-}
+  const [isOriginPageClik, setIsOriginPageClick] = useState(true);
+  function Render(isOriginPageClik) {}
 
   return (
     <div className={navStyles.nav}>
