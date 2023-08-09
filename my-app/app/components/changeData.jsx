@@ -6,8 +6,11 @@ import Astyle from '@/app/styles/newdata.module.css';
 import CreatableSelect from 'react-select/creatable'; // react套件
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
+import dynamic from 'next/dynamic';
 
 export default function EditPage({ isShowAddPage, setShowAddPage, companyData, setCompanyData }) {
+  const CreatableSelect = dynamic(() => import('react-select/creatable'), { ssr: false }); // import edit component 並且使用lazy loading
+
   const handleClosePage = () => {
     setCompanyData({ name: '', url: '', desc: '', products: '' });
     setShowAddPage(false);
@@ -67,7 +70,7 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
         <div className={Astyle.uploadForm}>
           <div className={Astyle.eachForm} style={{ margin: '0' }}>
             <div className={Astyle.eachTitle}>Name: </div>
-            <CreatableSelect
+            {cname && <CreatableSelect
               className={Astyle.selectInput}
               isClearable
               options={comName}
@@ -76,7 +79,7 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
               id="company_name"
               // value={}
               // onChange={()=>handleChange()}
-            />
+            />}
           </div>
           <div className={Astyle.eachForm}>
             <div className={Astyle.eachTitle}>Link: </div>
