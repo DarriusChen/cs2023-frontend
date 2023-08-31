@@ -2,7 +2,7 @@ import cdata from '@/app/company.json';
 import tdata from '@/app/typedata.json';
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Astyle from '@/app/styles/newdata.module.css';
+import Astyle from '@/app/styles/change.module.css';
 import CreatableSelect from 'react-select/creatable'; // react套件
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
@@ -44,11 +44,11 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
   };
   const cname = companyData.name;
   const cproducts = companyData.products;
-  console.log(cname, cproducts);
 
   //
 
-  return (
+  return (<>
+    <div></div>
     <div className={isShowAddPage ? Astyle.newMain : Astyle.closeMain}>
       <div className={Astyle.pageArea}>
         <div className={Astyle.titleArea}>
@@ -67,7 +67,7 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
           />
         </div>
 
-        <div className={Astyle.uploadForm}>
+        <form className={Astyle.uploadForm} action={''}>
           <div className={Astyle.eachForm} style={{ margin: '0' }}>
             <div className={Astyle.eachTitle}>Name: </div>
             {cname && <CreatableSelect
@@ -77,13 +77,14 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
               placeholder="Select or Create..."
               defaultValue={cname}
               id="company_name"
+              required
               // value={}
               // onChange={()=>handleChange()}
             />}
           </div>
           <div className={Astyle.eachForm}>
             <div className={Astyle.eachTitle}>Link: </div>
-            <input type="url" className={Astyle.input} defaultValue={companyData['url']} id="company_url"></input>
+            <input type="url" className={Astyle.input} defaultValue={companyData['url']} id="company_url" required></input>
           </div>
           <div className={Astyle.eachForm} style={{ height: '20vh', alignItems: 'start' }}>
             <div className={Astyle.eachTitle}>Description: </div>
@@ -92,6 +93,7 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
               style={{ height: '20vh', padding: '1vh' }}
               defaultValue={companyData['desc']}
               id="company_desc"
+              required
             ></textarea>
           </div>
           <div className={Astyle.eachForm}>
@@ -103,6 +105,7 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
               options={productsData}
               defaultValue={cproducts}
               id="company_products"
+              required
             />
           </div>
           <div className={Astyle.eachForm} style={{ marginBottom: '0' }}>
@@ -125,11 +128,12 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
           </div>
           <div className={Astyle.submitContainer}>
             <div className={Astyle.submitArea}>
-              <button className={Astyle.submit}>Submit</button>
+              <button className={Astyle.submit} type='submit'>Submit</button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
+    </>
   );
 }
