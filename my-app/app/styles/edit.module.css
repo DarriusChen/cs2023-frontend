@@ -149,7 +149,25 @@
   font-weight: bold;
 }
 
+.delBtn {
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 1vh;
+  background-color: #8862629c;
+  color: white;
+  border-radius: 0.5vh;
+  font-size: medium;
+  font-weight: bold;
+}
+
 .crudBtn:hover {
   background-color: rgba(161, 211, 200, 0.72);
   color: rgba(6, 62, 86, 0.829);
+}
+
+.delBtn:hover {
+  background-color: #bcabab9c;
+  color: rgba(72, 27, 3, 0.829);
 }
