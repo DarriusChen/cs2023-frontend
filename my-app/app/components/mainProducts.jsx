@@ -40,7 +40,6 @@ export default function MainProducts({
     getAllCompanyData()
       .then((data) => {
         setCData(data);
-        console.log(data)
       })
       .catch((error) => {
         console.log('Error:', error);

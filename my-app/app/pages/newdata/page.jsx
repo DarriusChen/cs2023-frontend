@@ -16,7 +16,6 @@ async function getAllProducts() {
       throw new Error('Failed to fetch data');
     }
     const result = await res.json();
-    console.log(result);
     return result;
   } catch (error) {
     console.error('An error occured:', error);
@@ -32,7 +31,6 @@ export default function Importdata() {
     getAllProducts()
       .then((data) => {
         setPData(data);
-        console.log(data);
       })
       .catch((error) => {
         console.error('Error:', error);
