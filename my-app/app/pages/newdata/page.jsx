@@ -1,28 +1,57 @@
 'use client';
 
 import Astyle from '@/app/styles/newdata.module.css';
-import cdata from '@/app/company.json';
-import tdata from '@/app/typedata.json';
 import CreatableSelect from 'react-select/creatable'; // react套件
-import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
 
-export default function Importdata() {
-  // data processing -> to fit the data format of the react library
-  const comName = cdata.map((data) => {
-    return { value: data.name, label: data.name };
-  });
+// get all products
+async function getAllProducts() {
+  try {
+    const res = await fetch('http://192.168.70.25:8000/CategoryTag/');
+    // The return value is *not* serialized
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error('Failed to fetch data');
+    }
+    const result = await res.json();
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.error('An error occured:', error);
+    throw error;
+  }
+}
 
-  const productsData = Object.keys(tdata).map((key) => ({
-    label: key,
-    options: tdata[key].map((data) => ({ value: data, label: data }))
-  }));
+export default function Importdata() {
+  // get products data
+  const [pdata, setPData] = useState([]);
+  useEffect(() => {
+    // Fetch data and update state when the component mounts
+    getAllProducts()
+      .then((data) => {
+        setPData(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        // Handle the error
+      });
+  }, []);
+
+  // data processing -> to fit the data format of the react library
+  const productsData =
+    pdata.length > 0
+      ? pdata.map((data, i) => {return {
+          label: Object.keys(data)[0],
+          options: Object.values(data).map((data,i) => ({ value: data, label: data }))
+        }})
+      :[];
 
   const handleSubmit = async (event) => {
     // Stop the form from submitting and refreshing the page.
-    event.preventDefault()
+    event.preventDefault();
 
     // Get data from the form.
     const data = {
@@ -50,7 +79,7 @@ export default function Importdata() {
       body: JSONdata
     };
 
-    console.log(JSONdata)
+    console.log(JSONdata);
     // Send the form data to our forms API on Vercel and get a response.
     const response = await fetch(endpoint, options);
 
@@ -82,23 +111,28 @@ export default function Importdata() {
         <form className={Astyle.uploadForm} onSubmit={handleSubmit}>
           <div className={Astyle.eachForm} style={{ margin: '0' }}>
             <div className={Astyle.eachTitle}>Name: </div>
-              <input
-                type="text"
-                className={Astyle.input}
-                isClearable
-                options={comName}
-                placeholder="New company name..."
-                id="company_name"
-                required
-                pattern="^[A-Z].*"
-                title="Please start with an uppercase letter"
-                // value={}
-                // onChange={()=>handleChange()}
-              />
+            <input
+              type="text"
+              className={Astyle.input}
+              isClearable
+              placeholder="New company name..."
+              id="company_name"
+              required
+              pattern="^[A-Z].*"
+              title="Please start with an uppercase letter"
+              // value={}
+              // onChange={()=>handleChange()}
+            />
           </div>
           <div className={Astyle.eachForm}>
             <div className={Astyle.eachTitle}>Link: </div>
-            <input type="url" className={Astyle.input} id="company_url" placeholder="New company link..." required></input>
+            <input
+              type="url"
+              className={Astyle.input}
+              id="company_url"
+              placeholder="New company link..."
+              required
+            ></input>
           </div>
           <div className={Astyle.eachForm} style={{ height: '20vh', alignItems: 'start' }}>
             <div className={Astyle.eachTitle}>Description: </div>
