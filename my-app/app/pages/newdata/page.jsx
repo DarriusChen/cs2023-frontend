@@ -31,6 +31,7 @@ export default function Importdata() {
     getAllProducts()
       .then((data) => {
         setPData(data);
+        console.log(data)
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -43,9 +44,10 @@ export default function Importdata() {
     pdata.length > 0
       ? pdata.map((data, i) => {return {
           label: Object.keys(data)[0],
-          options: Object.values(data).map((data,i) => ({ value: data, label: data }))
+          options: data[Object.keys(data)[0]].map((data,i) => ({ value: data, label: data }))
         }})
       :[];
+  console.log(productsData)
 
   const handleSubmit = async (event) => {
     // Stop the form from submitting and refreshing the page.
@@ -84,7 +86,7 @@ export default function Importdata() {
     // Get the response data from server as JSON.
     // If server returns the name submitted, that means the form works.
     const result = await response.json();
-    alert(`This is what you sent: ${result.data}`);
+    alert(`Company data sending: ${result}`);
   };
 
   // Handle CreatableSelect

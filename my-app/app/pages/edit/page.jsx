@@ -5,11 +5,10 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Estyle from '../../styles/edit.module.css';
 import Astyle from '../../styles/newdata.module.css';
-// import cdata from '../../company.json';
 import { ChangeEvent } from 'react';
 import dynamic from 'next/dynamic'; // lazy loading->先不要rendor直到client點擊
 
-const EditPage = dynamic(() => import('../../components/changeData'), { ssr: false }); // import edit component 並且使用lazy loading
+const EditPage = dynamic(() => import('../../components/changeData-old'), { ssr: false }); // import edit component 並且使用lazy loading
 
 async function getAllCompanyData() {
   try {
@@ -31,11 +30,35 @@ export default function Edit() {
   const [cdata, setCData] = useState([]);
   const [clickBtn, setClickBtn] = useState(false);
 
+  // search
+  const [searchInput, setSearchInput] = useState('');
+  const handleSearchChange = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+
+    setSearchInput(e.target.value);
+    if (!searchTerm) {
+      setClickBtn(!clickBtn);
+    } else {
+      setCData(cdata.filter((data, i) => data.name.toLowerCase().includes(searchTerm)));
+    }
+  };
+
+  const handleSearchBtn = (e) => {
+    const searchTerm = e.target.value
+    if(!searchTerm){
+      ''
+    }
+    else {
+      setCData(cdata.filter((data, i) => data.name.toLowerCase().includes(searchTerm).toLowerCase()));
+    }
+  }
+
   useEffect(() => {
     // Fetch data and update state when the component mounts
     getAllCompanyData()
       .then((data) => {
         setCData(data);
+        console.log(data);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -44,14 +67,14 @@ export default function Edit() {
   }, [clickBtn]); // Empty dependency array ensures the effect runs only once when the component mounts
 
   //控制頁面要不要跳出
-  const [isShowAddPage, setShowAddPage] = useState(false);
-  const [companyData, setCompanyData] = useState({ name: '', url: '', desc: '', products: '' });
-  const handleShowPage = (name, url, desc, products) => {
-    const productsOptions = products.map((data,i) => ({ value: data, label: data }));
-    setCompanyData({ name: '', url: '', desc: '', products: '' });
-    setCompanyData({ name: { value: name, label: name }, url: url, desc: desc, products: productsOptions });
-    setShowAddPage(true);
-  };
+  // const [isShowAddPage, setShowAddPage] = useState(false);
+  // const [companyData, setCompanyData] = useState({ name: '', url: '', desc: '', products: '' });
+  // const handleShowPage = (name, url, desc, products) => {
+  //   const productsOptions = products.map((data, i) => ({ value: data, label: data }));
+  //   setCompanyData({ name: '', url: '', desc: '', products: '' });
+  //   setCompanyData({ name: { value: name, label: name }, url: url, desc: desc, products: productsOptions });
+  //   setShowAddPage(true);
+  // };
   // console.log(companyData)
 
   //crud-刪除
@@ -75,7 +98,7 @@ export default function Edit() {
     if (response.ok) {
       alert(`刪除成功!`);
       // route.push('/pages/edit');
-      setClickBtn(() => !clickBtn)
+      setClickBtn(() => !clickBtn);
     } else {
       const errorMsg = await response.json();
       alert(`刪除失敗：${errorMsg}`);
@@ -86,8 +109,14 @@ export default function Edit() {
     <div className={Estyle.main}>
       <div className={Estyle.mainArea}>
         <div className={Estyle.searchNAdd}>
-          <input type="text" placeholder="Search..." className={Estyle.inputArea}></input>
-          <Link href={'#'} className={Estyle.searchIcon}>
+          <input
+            type="text"
+            placeholder="search by company name..."
+            className={Estyle.inputArea}
+            value={searchInput}
+            onChange={handleSearchChange}
+          ></input>
+          <button onClick={handleSearchBtn} className={Estyle.searchIcon}>
             <Image
               src="/search.svg"
               width={0}
@@ -96,7 +125,7 @@ export default function Edit() {
               style={{ width: '4.5vh', height: 'auto' }}
               alt="search"
             ></Image>
-          </Link>
+          </button>
           <Link href={'/pages/newdata'} className={Estyle.addNew}>
             NEW
           </Link>
@@ -117,17 +146,18 @@ export default function Edit() {
                 {data.url}
               </Link>
               <div className={Estyle.cProducts}>
-                {data.Products.map((p,i) => (
-                  <div className={Estyle.eachProduct}>{p}</div>
+                {data.Products.map((p, i) => (
+                  <div key={i} className={Estyle.eachProduct}>{p}</div>
                 ))}
               </div>
               <div className={Estyle.crud}>
-                <button
+                <Link
                   className={Estyle.crudBtn}
-                  onClick={() => handleShowPage(data.name, data.url, data.Description, data.Products)}
+                  // onClick={() => handleShowPage(data.name, data.url, data.Description, data.Products)}
+                  href={`pages/edit/changeData/${data.company_id}`}
                 >
                   EDIT
-                </button>
+                </Link>
                 <button className={Estyle.delBtn} onClick={() => handleDelBtn(data.company_id)}>
                   DEL
                 </button>
@@ -136,12 +166,13 @@ export default function Edit() {
           ))}
         </div>
       </div>
-      <EditPage
+        {/* <EditPage
         isShowAddPage={isShowAddPage}
         setShowAddPage={setShowAddPage}
         companyData={companyData}
         setCompanyData={setCompanyData}
-      />
+      /> */}
+      
     </div>
   );
 }
