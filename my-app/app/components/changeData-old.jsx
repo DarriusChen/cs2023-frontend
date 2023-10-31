@@ -7,6 +7,7 @@ import CreatableSelect from 'react-select/creatable'; // react套件
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
 import dynamic from 'next/dynamic';
+import Modal from './modal/Modal';
 
 export default function EditPage({ isShowAddPage, setShowAddPage, companyData, setCompanyData }) {
   const CreatableSelect = dynamic(() => import('react-select/creatable'), { ssr: false }); // import edit component 並且使用lazy loading
@@ -47,7 +48,7 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
 
   //
 
-  return (<>
+  return (<Modal>
     <div></div>
     <div className={isShowAddPage ? Astyle.newMain : Astyle.closeMain}>
       <div className={Astyle.pageArea}>
@@ -134,6 +135,6 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
         </form>
       </div>
     </div>
-    </>
+    </Modal>
   );
 }

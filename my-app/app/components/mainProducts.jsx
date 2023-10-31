@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,7 +10,7 @@ export default function MainProducts({
   setIsSidebarOpen,
   selectedTags,
   setSelectedTags,
-  productData,
+  productList,
   getAllCompanyData
 }) {
   //handle searchbar
@@ -35,44 +36,75 @@ export default function MainProducts({
   const removeAllTags = () => {
     setSelectedTags([]);
   };
+
+  // create a new data format: each company with its own products
+  // const productList =
+  //   productData.length > 0
+  //     ? productData.reduce((accumulator, currentValue) => {
+  //         // Get the values (arrays) from the object and merge them into the accumulator
+  //         accumulator.push(...Object.values(currentValue)[0]);
+  //         return accumulator;
+  //       }, [])
+  //     : [];
+  
   const [company, setCData] = useState([]);
+
+  const [companysByProducts, setCompanysData] = useState([])
+  // const [cbData, setCBData] = useState([]);
+  // const [plist, setPlist] = useState([]);
+
+  // const companysByProducts =
+  //   company.length > 0 && productList.length > 0
+  //     ? productList.map((item, i) => ({
+  //         tag: item,
+  //         companies: company
+  //           .filter((com) => com.Products.includes(item))
+  //           .map((item, i) => {
+  //             return { name: item.name, products: item.Products, id: item.company_id };
+  //           }),
+  //         selected: false,
+  //         companies_selected: Array(company.filter((com) => com.Products.includes(item)).length).fill(false)
+  //       }))
+  //     : [];
+  // handle checkbox
+  const [isChecked, setIsChecked] = useState(
+    companysByProducts.length > 0 && productList.length > 0
+      ? companysByProducts.map(() => Array(companysByProducts[0].companies_selected.length).fill(false))
+      : []
+  );
   useEffect(() => {
     getAllCompanyData()
       .then((data) => {
         setCData(data);
+        console.log(productList)
+        setCompanysData(data.length > 0 && productList.length > 0
+          ? productList.map((item, i) => ({
+              tag: item,
+              companies: data
+                .filter((com) => com.Products.includes(item))
+                .map((item, i) => {
+                  return { name: item.name, products: item.Products, id: item.company_id };
+                }),
+              selected: false,
+              companies_selected: Array(data.filter((com) => com.Products.includes(item)).length).fill(false)
+            }))
+          : [])
+
+        setIsChecked(
+          companysByProducts.length > 0 && productList.length > 0
+            ? companysByProducts.map(() => Array(companysByProducts[0].companies_selected.length).fill(false))
+            : []
+        );
       })
       .catch((error) => {
         console.log('Error:', error);
       });
-  }, []);
-  // create a new data format: each company with its own products
-  const productList =
-    productData.length > 0
-      ? productData.reduce((accumulator, currentValue) => {
-          // Get the values (arrays) from the object and merge them into the accumulator
-          accumulator.push(...Object.values(currentValue)[0]);
-          return accumulator;
-        }, [])
-      : [];
-  const companysByProducts =
-    company.length > 0
-      ? productList.map((item, i) => ({
-          tag: item,
-          companies: company
-            .filter((com) => com.Products.includes(item))
-            .map((item, i) => {
-              return { name: item.name, products: item.Products, id: item.company_id };
-            }),
-          selected: false,
-          companies_selected: Array(company.filter((com) => com.Products.includes(item)).length).fill(false)
-        }))
-      : [];
-      console.log(companysByProducts)
+  },[]);
+  console.log(companysByProducts)
+  console.log(isChecked);
 
-
-  // handle checkbox
-  const [isChecked, setIsChecked] = useState(companysByProducts?[companysByProducts.map((data,i) => data.companies_selected)]:[]);
   const handleCheckList = (e, indexOfProductArea, indexOfEachCom) => {
+    console.log(isChecked);
     if (
       companysByProducts.filter((data, index) => {
         return index != indexOfProductArea && data.selected == true;
@@ -81,7 +113,7 @@ export default function MainProducts({
       // 如果有兩個重複的product area都有被選取，要跳alert
       alert('不能同時選取多種產品類別，請重新選擇！');
     } else {
-      const newIsChecked = isChecked.slice(); //create a new var and copy
+      const newIsChecked = [...isChecked]; //create a new var and copy
       newIsChecked[indexOfProductArea][indexOfEachCom] = !isChecked[indexOfProductArea][indexOfEachCom];
       companysByProducts[indexOfProductArea].companies_selected[indexOfEachCom] =
         newIsChecked[indexOfProductArea][indexOfEachCom]; //改company_selected的值
@@ -109,7 +141,7 @@ export default function MainProducts({
         setCompareLIst('');
       }
     }
-    console.log(isChecked)
+    console.log(isChecked);
   };
 
   // add or remove all comparing products
@@ -234,7 +266,7 @@ export default function MainProducts({
               return selectedTags.length > 0 ? selectedTags.includes(data.tag) : data;
             })
             .map((data, indexOfProductArea) => (
-              <div className={Style.eachProductArea}>
+              <div key={indexOfProductArea} className={Style.eachProductArea}>
                 <div className={Style.tagNameNSelect}>
                   <div className={Style.eachProduct}>{data.tag}</div>
                   <div className={Style.selectComBtn}>
@@ -288,7 +320,7 @@ export default function MainProducts({
         <div className={Style.infoAreaTop}>
           <div className={Style.compareComBtn}>
             <button
-              href={compareList == '' ? '' : `/pages/compare`}
+              href={compareList == '' ? null : `/pages/compare`}
               className={Style.compare}
               onClick={() => handleLetsGo()}
             >
