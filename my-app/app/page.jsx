@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Style from './styles/page.module.css';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ST } from 'next/dist/shared/lib/utils';
 import myData from './typedata.json' assert { type: 'json' };
 // import company from './company.json' assert { type: 'json' };
 import { usePathname, useRouter } from 'next/navigation';
@@ -109,7 +108,7 @@ const Sidebar = ({ isSidebarOpen, selectedTags, setSelectedTags, productData }) 
                             handleTagClick(item);
                           }}
                         >
-                          {item}
+                         ⦿ {item}
                         </Link>
                       );
                     })}
@@ -134,7 +133,6 @@ export default function Home() {
     getAllProducts()
       .then((data) => {
         setPData(data);
-        console.log(data)
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -142,6 +140,15 @@ export default function Home() {
       });
 
   }, []);
+
+  const productList =
+  pdata.length > 0
+    ? pdata.reduce((accumulator, currentValue) => {
+        // Get the values (arrays) from the object and merge them into the accumulator
+        accumulator.push(...Object.values(currentValue)[0]);
+        return accumulator;
+      }, [])
+    : [];
 
   // const router = useRouter();
 
@@ -168,7 +175,7 @@ export default function Home() {
           setIsSidebarOpen={setIsSidebarOpen}
           selectedTags={selectedTags}
           setSelectedTags={setSelectedTags}
-          productData={pdata}
+          productList={pdata}
           // company={company}
           getAllCompanyData={getAllCompanyData}
         />
