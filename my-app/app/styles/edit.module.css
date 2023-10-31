@@ -15,7 +15,7 @@
 .searchNAdd {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   width: 80%;
   height: 15%;
   margin: 2% 0;
@@ -33,10 +33,14 @@
 .searchIcon {
   display: flex;
   align-items: center;
-  background-color: rgb(253, 253, 253);
-  border: 0.3vh solid rgba(121, 87, 160, 0.807);
+  /* background-color: rgb(253, 253, 253); */
+  /* border: 0.3vh solid rgba(121, 87, 160, 0.807); */
   border-radius: 0.5vh;
   margin-left: 1%;
+}
+
+.searchIcon:hover{
+  cursor: pointer;
 }
 
 .addNew {
@@ -63,7 +67,7 @@
 
 .header {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   font-weight: bolder;
 }
 

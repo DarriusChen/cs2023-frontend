@@ -1,5 +1,5 @@
 .nav {
-  background-color: #8862629c;
+  background-color: #643f399c;/*#8862629c*/
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -30,8 +30,8 @@
 }
 
 .navItems {
-  height: 90%;
-  width: 30vh;
+  height: 3rem;
+  width: 6rem;
   align-items: center;
   border-radius: 5px;
   /* background-color: #f4b31a; */

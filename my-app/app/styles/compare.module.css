@@ -12,12 +12,49 @@
 .title {
   display: flex;
   justify-content: center;
-  font-size: 5vh;
+  font-size: 4vh;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   padding: 1vh;
+  color: rgb(14, 48, 70);
+}
+
+.tableWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1vh;
 }
 
 .tableArea {
-  display: block;
-  margin-top: 3vh;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin-top: 1vh;
+  width: 100%;
+}
+
+.tableArea_over {
+  margin-top: 1vh;
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.tContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5vh;
+  border: 3px solid #fdfcf4;
+  color: rgb(86, 64, 110);
+}
+
+.line {
+  border: 3px solid rgb(76, 53, 88);
+  border-radius: 1px;
+  margin-top: 1vh;
+}
+.functions{
+  display: 'flex';
+  justify-content: 'start'; 
+  align-items:"center";
+  padding: 1.5vh;
 }

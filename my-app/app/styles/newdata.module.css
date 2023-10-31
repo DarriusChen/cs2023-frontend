@@ -91,7 +91,7 @@
   outline-color: rgb(106, 160, 172);
   border-radius: 0.3rem;
   width: 40vh;
-  height: 3.5vh;
+  height: 5vh;
   padding-left: 1vh;
 }
 
@@ -139,7 +139,7 @@
 
 .submitArea {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   width: 57vh;
 }
 

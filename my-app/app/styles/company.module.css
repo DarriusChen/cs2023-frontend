@@ -4,8 +4,8 @@
 }
 
 .intro {
-  background-image: linear-gradient(to bottom right, rgb(229, 236, 233) 0%, rgba(237, 181, 129, 0.719) 100%);
-  color: rgb(28, 70, 103);
+  background-color: rgba(244, 219, 189, 0.764);
+  color: #5b5875;
   height: fit-content;
   display: flex;
   flex-wrap: wrap;
@@ -23,7 +23,7 @@
 }
 
 .cname:hover {
-  color: rgb(41, 132, 123);
+  color: rgb(128, 142, 159);
 }
 
 .desc {
@@ -35,7 +35,8 @@
 
 .products {
   display: flex;
-  background-color: rgba(229, 199, 162, 0.764);
+  /* background-color: rgba(229, 199, 162, 0.764); */
+  background-color: rgb(219, 192, 152);
   padding: 0 10%;
   width: 100%;
   height: 8%;
@@ -59,10 +60,10 @@
 }
 
 .dmArea {
-  background-color: rgba(205, 216, 237, 0.923);
+  /* background-color: #d3d8e1; */
   width: 97%;
-  height: 65vh;
-  margin: 1.5%;
+  height: 68vh;
+  margin: 0 1.5%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,6 +71,6 @@
 
 .dms {
     width: 70%;
-    height: 52vh;
+    height: 67vh;
     background-color: azure;
 }

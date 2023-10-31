@@ -1,12 +1,11 @@
 .newMain {
   height: 100%;
   min-width: 100vw;
-  position: absolute;
   top: 0;
   left: 0;
   background-color: #f1efdc;
-  z-index: 10;
-  opacity: 0.8;
+  /* z-index: 10;
+  opacity: 0.8; */
 }
 
 .closeMain {
@@ -143,7 +142,7 @@
 
 .submitArea {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   width: 57vh;
 }
 
