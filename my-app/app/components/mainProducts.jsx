@@ -1,5 +1,5 @@
-'use client'
-import React, { useState, useEffect } from 'react';
+'use client';
+import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -10,9 +10,10 @@ export default function MainProducts({
   setIsSidebarOpen,
   selectedTags,
   setSelectedTags,
-  productList,
-  getAllCompanyData
+  company,
+  companiesByProducts
 }) {
+
   //handle searchbar
   const [inputText, setInputText] = useState('');
 
@@ -37,76 +38,23 @@ export default function MainProducts({
     setSelectedTags([]);
   };
 
-  // create a new data format: each company with its own products
-  // const productList =
-  //   productData.length > 0
-  //     ? productData.reduce((accumulator, currentValue) => {
-  //         // Get the values (arrays) from the object and merge them into the accumulator
-  //         accumulator.push(...Object.values(currentValue)[0]);
-  //         return accumulator;
-  //       }, [])
-  //     : [];
-  
-  const [company, setCData] = useState([]);
-
-  const [companysByProducts, setCompanysData] = useState([])
-  // const [cbData, setCBData] = useState([]);
-  // const [plist, setPlist] = useState([]);
-
-  // const companysByProducts =
-  //   company.length > 0 && productList.length > 0
-  //     ? productList.map((item, i) => ({
-  //         tag: item,
-  //         companies: company
-  //           .filter((com) => com.Products.includes(item))
-  //           .map((item, i) => {
-  //             return { name: item.name, products: item.Products, id: item.company_id };
-  //           }),
-  //         selected: false,
-  //         companies_selected: Array(company.filter((com) => com.Products.includes(item)).length).fill(false)
-  //       }))
-  //     : [];
   // handle checkbox
-  const [isChecked, setIsChecked] = useState(
-    companysByProducts.length > 0 && productList.length > 0
-      ? companysByProducts.map(() => Array(companysByProducts[0].companies_selected.length).fill(false))
-      : []
-  );
-  useEffect(() => {
-    getAllCompanyData()
-      .then((data) => {
-        setCData(data);
-        console.log(productList)
-        setCompanysData(data.length > 0 && productList.length > 0
-          ? productList.map((item, i) => ({
-              tag: item,
-              companies: data
-                .filter((com) => com.Products.includes(item))
-                .map((item, i) => {
-                  return { name: item.name, products: item.Products, id: item.company_id };
-                }),
-              selected: false,
-              companies_selected: Array(data.filter((com) => com.Products.includes(item)).length).fill(false)
-            }))
-          : [])
+  const [isChecked, setIsChecked] = useState([]);
+  // Handle checkbox initialization
+  const initializeCheckedState = (data) => {
+    const checkedState = data.length > 0 ? data.map(() => Array(data[0].companies_selected.length).fill(false)) : [];
+    return checkedState;
+  };
 
-        setIsChecked(
-          companysByProducts.length > 0 && productList.length > 0
-            ? companysByProducts.map(() => Array(companysByProducts[0].companies_selected.length).fill(false))
-            : []
-        );
-      })
-      .catch((error) => {
-        console.log('Error:', error);
-      });
-  },[]);
-  console.log(companysByProducts)
-  console.log(isChecked);
+  // Make sure that the state is only initialized once.
+  useEffect(() => {
+    const init = initializeCheckedState(companiesByProducts);
+    setIsChecked(init);
+  }, [companiesByProducts]);
 
   const handleCheckList = (e, indexOfProductArea, indexOfEachCom) => {
-    console.log(isChecked);
     if (
-      companysByProducts.filter((data, index) => {
+      companiesByProducts.filter((data, index) => {
         return index != indexOfProductArea && data.selected == true;
       }).length > 0
     ) {
@@ -115,16 +63,16 @@ export default function MainProducts({
     } else {
       const newIsChecked = [...isChecked]; //create a new var and copy
       newIsChecked[indexOfProductArea][indexOfEachCom] = !isChecked[indexOfProductArea][indexOfEachCom];
-      companysByProducts[indexOfProductArea].companies_selected[indexOfEachCom] =
+      companiesByProducts[indexOfProductArea].companies_selected[indexOfEachCom] =
         newIsChecked[indexOfProductArea][indexOfEachCom]; //改company_selected的值
       setIsChecked(newIsChecked);
       // 如果該區的check裡面有true的話，把該區的selected改成true
       isChecked[indexOfProductArea].includes(true)
-        ? (companysByProducts[indexOfProductArea].selected = true)
-        : (companysByProducts[indexOfProductArea].selected = false);
+        ? (companiesByProducts[indexOfProductArea].selected = true)
+        : (companiesByProducts[indexOfProductArea].selected = false);
       // 建立compareArray
-      if (companysByProducts.filter((data) => data.selected == true).length != 0) {
-        const trueCompanies = companysByProducts.filter((data) => data.selected == true)[0];
+      if (companiesByProducts.filter((data) => data.selected == true).length != 0) {
+        const trueCompanies = companiesByProducts.filter((data) => data.selected == true)[0];
         const product = trueCompanies.tag;
         const iscompare = trueCompanies.companies_selected;
         const compareArray = trueCompanies.companies
@@ -137,18 +85,29 @@ export default function MainProducts({
           })
           .filter((data) => data); //filter存在的company
         setCompareLIst({ product: product, companies: compareArray });
+        // 如果全部都被勾選->就把select all改成 remove all
+        if (!companiesByProducts[indexOfProductArea].companies_selected.includes(false)){
+          const newIsRemove = isRemove.slice();
+          newIsRemove[indexOfProductArea] = !isRemove[indexOfProductArea];
+          setRemove(newIsRemove);
+        } else {
+          setRemove([])
+        }
       } else {
         setCompareLIst('');
+        setRemove([]) //如果所有勾選都被清除，就要轉select all
       }
     }
     console.log(isChecked);
   };
 
   // add or remove all comparing products
-  const [isRemove, setRemove] = useState(Array(companysByProducts.length).fill(false));
+  const [isRemove, setRemove] = useState([]);
+  // const [isRemove, setRemove] = useState(Array(companiesByProducts.length).fill(false));
+
   const handleRmBtn = (indexOfProductArea) => {
     if (
-      companysByProducts.filter((data, index) => {
+      companiesByProducts.filter((data, index) => {
         return index != indexOfProductArea && data.selected == true;
       }).length > 0
     ) {
@@ -160,11 +119,12 @@ export default function MainProducts({
       setRemove(newIsRemove);
       if (!isRemove[indexOfProductArea]) {
         isChecked[indexOfProductArea] = isChecked[indexOfProductArea].fill(true);
-        companysByProducts[indexOfProductArea].selected = true;
+        companiesByProducts[indexOfProductArea].selected = true;
+        companiesByProducts[indexOfProductArea].companies_selected = companiesByProducts[indexOfProductArea].companies_selected.fill(true);
         // handle selected amount
-        const trueCompanies = companysByProducts.filter((data) => data.selected == true)[0];
-        const product = trueCompanies.tag;
-        const iscompare = trueCompanies.companies_selected;
+        const trueCompanies = companiesByProducts.filter((data) => data.selected == true)[0]; // 被勾選的公司資料
+        const product = trueCompanies.tag; //被勾選的公司所屬產品類別
+        const iscompare = trueCompanies.companies_selected; //該產品類別中被選擇公司的 trre/false array
         const compareArray = trueCompanies.companies
           .map((com, i) => {
             if (iscompare[i]) {
@@ -177,12 +137,12 @@ export default function MainProducts({
         setCompareLIst({ product: product, companies: compareArray });
       } else {
         isChecked[indexOfProductArea] = isChecked[indexOfProductArea].fill(false);
-        companysByProducts[indexOfProductArea].selected = false;
+        companiesByProducts[indexOfProductArea].selected = false;
+        companiesByProducts[indexOfProductArea].companies_selected = companiesByProducts[indexOfProductArea].companies_selected.fill(false);
         setCompareLIst(''); //selected amount 歸零
       }
     }
   };
-
   // Let's go button
   const router = useRouter();
   const [compareList, setCompareLIst] = useState('');
@@ -195,7 +155,7 @@ export default function MainProducts({
       alert('Please select at least one company');
     }
   };
-
+  console.log(compareList)
   return (
     <div className={Style.mainRight}>
       {selectedTags.length != 0 ? (
@@ -242,7 +202,7 @@ export default function MainProducts({
           }`}</div>
           <div className={Style.selectAmount}>
             Selected : {compareList ? compareList.companies.length : '0'}{' '}
-            {compareList ? '(' + compareList.Product + ')' : ''}
+            {compareList ? '(' + compareList.product + ')' : ''}
           </div>
         </div>
         <div className={Style.searchBar}>
@@ -261,7 +221,7 @@ export default function MainProducts({
       <div className={Style.companyArea}>
         <div className={Style.infoAreaTop}></div>
         <div className={Style.infoArea}>
-          {companysByProducts
+          {companiesByProducts
             .filter((data) => {
               return selectedTags.length > 0 ? selectedTags.includes(data.tag) : data;
             })
