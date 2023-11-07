@@ -17,14 +17,14 @@ export default function Compare() {
           <div className={Cstyle.tableArea}>
             <div style={{padding:"1.5vh"}}>{compare_companies[0]}</div>
             {compare_companies.slice(1,).map((data, i) => {
-              return <div style={{ textAlign: 'center', padding:"1.5vh"}}>{data}</div>;
+              return <div key={i} style={{ textAlign: 'center', padding:"1.5vh"}}>{data}</div>;
             })}
             {/* <div> */}
             {CompareData['Category']['端點偵測分析'].map((item, index) => (
               <React.Fragment key={index}>
                 <div className={Cstyle.functions}>{item}</div>
                 {Object.values(CompareData['Companies-comparison']['EDR']).map((data, i) => (
-                  <div className={Cstyle.tContent}>{data[item]}</div>
+                  <div key={i} className={Cstyle.tContent}>{data[item]}</div>
                 ))}
                </React.Fragment>
             ))}

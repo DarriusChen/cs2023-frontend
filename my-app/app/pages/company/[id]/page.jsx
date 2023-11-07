@@ -75,8 +75,8 @@ export default function ShowCompany({ params: { id } }) {
       </div>
       <div className={Cstyle.products}>
         Products: &emsp;
-        {info?info.Products.map((tag) => (
-          <div className={Cstyle.tag}>{tag}</div>
+        {info?info.Products.map((tag,i) => (
+          <div className={Cstyle.tag} key={i}>{tag}</div>
         )):''}
       </div>
       <div className={Cstyle.mainBody}>

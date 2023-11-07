@@ -114,7 +114,7 @@ export default function Importdata() {
             <input
               type="text"
               className={Astyle.input}
-              isClearable
+              isclearable="true"
               placeholder="New company name..."
               id="company_name"
               required
@@ -148,7 +148,7 @@ export default function Importdata() {
             <div className={Astyle.eachTitle}>Products: </div>
             <CreatableSelect
               className={Astyle.selectInput}
-              isClearable
+              isclearable="true"
               isMulti
               options={productsData}
               id="company_products"
