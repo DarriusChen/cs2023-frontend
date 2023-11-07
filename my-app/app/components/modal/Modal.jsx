@@ -1,8 +1,8 @@
 'use client';
 import { useCallback, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import mstyle from '@/app/styles/modal.module.css';
-import '@/app/styles/haha.module.css'
+// import mstyle from '@/app/styles/modal.module.css';
+// import '@/app/styles/haha.module.css'
 
 export default function Modal({ children }) {
   const overlay = useRef(null);
@@ -37,17 +37,16 @@ export default function Modal({ children }) {
   return (
     <div
       ref={overlay}
-        className="fixed z-10 left-0 right-0 top-0 bottom-0 mx-auto bg-black-60"
-
+       style={{
+        position: 'fixed', zIndex: 10, left: 0, right: 0, top: 0, bottom: 0, margin: 'auto', backgroundColor: 'rgba(0, 0, 0, 0.6)'}}
+ 
       // className={mstyle.modalmain}
       onClick={onClick}
     >
       <div
         ref={wrapper}
 
-        className="absolute top-12 left-12 -translate-x-12 -translate-y-12 w-full p-6"
-
-        // className="position-absolute top-50 start-50 w-50 h-50 overflow-scroll translate-middle col-12 bg-white rounded "
+        style={{position: 'absolute',   top: '50%',   left: '50%',   transform: 'translate(-50%, -50%)',   width: '100%',   padding: '1.5rem'}}
       >
         {children}
       </div>

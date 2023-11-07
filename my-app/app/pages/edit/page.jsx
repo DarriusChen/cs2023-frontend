@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Estyle from '../../styles/edit.module.css';
-import Astyle from '../../styles/newdata.module.css';
+// import Astyle from '../../styles/newdata.module.css';
 import { ChangeEvent } from 'react';
 import dynamic from 'next/dynamic'; // lazy loading->先不要rendor直到client點擊
 
@@ -154,7 +154,7 @@ export default function Edit() {
                 <Link
                   className={Estyle.crudBtn}
                   // onClick={() => handleShowPage(data.name, data.url, data.Description, data.Products)}
-                  href={`pages/edit/changeData/${data.company_id}`}
+                  href={`/pages/edit/changeData/${data.company_id}`}
                 >
                   EDIT
                 </Link>

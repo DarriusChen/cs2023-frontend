@@ -158,7 +158,7 @@ export default function UpdateInfo({ params: { id } }) {
             <div className={Astyle.tdesc}>請根據以下欄位填入對應的公司資訊</div>
           </div>
           <div className={Astyle.closeBtnArea} style={{ height: '0' }}>
-            <Image
+            {/* <Image
               src={'/close.svg'}
               alt="close"
               width={0}
@@ -166,7 +166,7 @@ export default function UpdateInfo({ params: { id } }) {
               style={{ width: 'auto', height: 'auto' }}
               className={Astyle.closeBtn}
               onClick={() => handleClosePage()}
-            />
+            /> */}
           </div>
 
           <form className={Astyle.uploadForm} action={''}>
