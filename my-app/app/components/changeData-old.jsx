@@ -73,7 +73,7 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
             <div className={Astyle.eachTitle}>Name: </div>
             {cname && <CreatableSelect
               className={Astyle.selectInput}
-              isClearable
+              isclearable="true"
               options={comName}
               placeholder="Select or Create..."
               defaultValue={cname}
@@ -101,7 +101,7 @@ export default function EditPage({ isShowAddPage, setShowAddPage, companyData, s
             <div className={Astyle.eachTitle}>Products: </div>
             <CreatableSelect
               className={Astyle.selectInput}
-              isClearable
+              isclearable="true"
               isMulti
               options={productsData}
               defaultValue={cproducts}
