@@ -6,6 +6,7 @@
   align-items: center;
   padding: 10px;
   height: 7vh;
+  letter-spacing: 0.08rem;
 }
 
 .navLogo {
@@ -38,7 +39,7 @@
   font-weight: bolder;
   display: flex;
   justify-content: center;
-  font-size: large;
+  font-size: 2vh;
 }
 
 .navItems:hover {
