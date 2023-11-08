@@ -28,30 +28,20 @@ async function getAllCompanyData() {
 
 export default function Edit() {
   const [cdata, setCData] = useState([]);
+  const [showdata, setShowData] = useState([]); //暫存資料用來filter
   const [clickBtn, setClickBtn] = useState(false);
 
   // search
   const [searchInput, setSearchInput] = useState('');
   const handleSearchChange = (e) => {
     const searchTerm = e.target.value.toLowerCase();
-
     setSearchInput(e.target.value);
     if (!searchTerm) {
-      setClickBtn(!clickBtn);
+      setShowData(cdata);
     } else {
-      setCData(cdata.filter((data, i) => data.name.toLowerCase().includes(searchTerm)));
+      setShowData(cdata.filter((data, i) => data.name.toLowerCase().includes(searchTerm)));
     }
   };
-
-  const handleSearchBtn = (e) => {
-    const searchTerm = e.target.value
-    if(!searchTerm){
-      ''
-    }
-    else {
-      setCData(cdata.filter((data, i) => data.name.toLowerCase().includes(searchTerm).toLowerCase()));
-    }
-  }
 
   useEffect(() => {
     // Fetch data and update state when the component mounts
@@ -65,17 +55,6 @@ export default function Edit() {
         // Handle the error
       });
   }, [clickBtn]); // Empty dependency array ensures the effect runs only once when the component mounts
-
-  //控制頁面要不要跳出
-  // const [isShowAddPage, setShowAddPage] = useState(false);
-  // const [companyData, setCompanyData] = useState({ name: '', url: '', desc: '', products: '' });
-  // const handleShowPage = (name, url, desc, products) => {
-  //   const productsOptions = products.map((data, i) => ({ value: data, label: data }));
-  //   setCompanyData({ name: '', url: '', desc: '', products: '' });
-  //   setCompanyData({ name: { value: name, label: name }, url: url, desc: desc, products: productsOptions });
-  //   setShowAddPage(true);
-  // };
-  // console.log(companyData)
 
   //crud-刪除
   const route = useRouter();
@@ -94,14 +73,18 @@ export default function Edit() {
       }
       // Body of the request is the JSON data we created above.
     };
-    const response = await fetch(endpoint, options);
-    if (response.ok) {
-      alert(`刪除成功!`);
-      // route.push('/pages/edit');
-      setClickBtn(() => !clickBtn);
+    if (confirm('是否確認刪除此筆資料？')) {
+      const response = await fetch(endpoint, options);
+      if (response.ok) {
+        alert(`刪除成功!`);
+        // route.push('/pages/edit');
+        setClickBtn(() => !clickBtn);
+      } else {
+        const errorMsg = await response.json();
+        alert(`刪除失敗：${errorMsg}`);
+      }
     } else {
-      const errorMsg = await response.json();
-      alert(`刪除失敗：${errorMsg}`);
+      ('已取消！');
     }
   }
 
@@ -116,16 +99,6 @@ export default function Edit() {
             value={searchInput}
             onChange={handleSearchChange}
           ></input>
-          <button onClick={handleSearchBtn} className={Estyle.searchIcon}>
-            <Image
-              src="/search.svg"
-              width={0}
-              height={0}
-              // sizes="5vh"
-              style={{ width: '4.5vh', height: 'auto' }}
-              alt="search"
-            ></Image>
-          </button>
           <Link href={'/pages/newdata'} className={Estyle.addNew}>
             NEW
           </Link>
@@ -137,42 +110,45 @@ export default function Edit() {
             <div className={Estyle.header}>Products</div>
             <div className={Estyle.header}>Actions</div>
           </div>
-          {cdata.map((data, i) => (
-            <div key={i} className={Estyle.company}>
-              <Link href={`/pages/company/${data.company_id}`} key={i} className={Estyle.cNAME}>
-                {data.name}
-              </Link>
-              <Link href={data.url} className={Estyle.cURL}>
-                {data.url}
-              </Link>
-              <div className={Estyle.cProducts}>
-                {data.Products.map((p, i) => (
-                  <div key={i} className={Estyle.eachProduct}>{p}</div>
-                ))}
-              </div>
-              <div className={Estyle.crud}>
-                <Link
-                  className={Estyle.crudBtn}
-                  // onClick={() => handleShowPage(data.name, data.url, data.Description, data.Products)}
-                  href={`/pages/edit/changeData/${data.company_id}`}
-                >
-                  EDIT
+          <div style={{ overflowY: 'scroll', maxHeight: '82vh', width: "100%" }}>
+            {(searchInput.length == 0 ? cdata : showdata).map((data, i) => (
+              <div key={i} className={Estyle.company}>
+                <Link href={`/pages/company/${data.company_id}`} key={i} className={Estyle.cNAME}>
+                  {data.name}
                 </Link>
-                <button className={Estyle.delBtn} onClick={() => handleDelBtn(data.company_id)}>
-                  DEL
-                </button>
+                <Link href={data.url} className={Estyle.cURL}>
+                  {data.url}
+                </Link>
+                <div className={Estyle.cProducts}>
+                  {data.Products.map((p, i) => (
+                    <div key={i} className={Estyle.eachProduct}>
+                      {p}
+                    </div>
+                  ))}
+                </div>
+                <div className={Estyle.crud}>
+                  <Link
+                    className={Estyle.crudBtn}
+                    // onClick={() => handleShowPage(data.name, data.url, data.Description, data.Products)}
+                    href={`/pages/edit/changeData/${data.company_id}`}
+                  >
+                    EDIT
+                  </Link>
+                  <button className={Estyle.delBtn} onClick={() => handleDelBtn(data.company_id)}>
+                    DEL
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-        {/* <EditPage
+      {/* <EditPage
         isShowAddPage={isShowAddPage}
         setShowAddPage={setShowAddPage}
         companyData={companyData}
         setCompanyData={setCompanyData}
       /> */}
-      
     </div>
   );
 }
