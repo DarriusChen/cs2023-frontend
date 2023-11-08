@@ -7,40 +7,32 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 0 10%;
-  background-color: rgb(228, 241, 241);
-  min-height: 100vh;
+  width: auto;
+  margin: 0 10vh;
+  background-color: #c7bca1;
 }
 
 .searchNAdd {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 80%;
-  height: 15%;
-  margin: 2% 0;
+  width: 90%;
+  height: 8vh;
+  margin: 2vh 0 0 0;
 }
 
 .inputArea {
-  width: 30%;
+  width: 40%;
   height: 5vh;
   border-radius: 0.5vh;
   padding: 0 2%;
-  outline-color: rgb(106, 160, 172);
+  /* outline-color: rgb(106, 160, 172); */
+  outline: none;
   border: 0.25vh solid rgb(184, 184, 184);
 }
 
-.searchIcon {
-  display: flex;
-  align-items: center;
-  /* background-color: rgb(253, 253, 253); */
-  /* border: 0.3vh solid rgba(121, 87, 160, 0.807); */
-  border-radius: 0.5vh;
-  margin-left: 1%;
-}
-
-.searchIcon:hover{
-  cursor: pointer;
+.inputArea:focus {
+  border: 3px solid rgb(162, 146, 207);
 }
 
 .addNew {
@@ -51,17 +43,18 @@
   color: aliceblue;
   padding: 1vh;
   border-radius: 0.5vh;
+  height: 4.5vh;
 }
 
 .addNew:hover {
-    background-color: rgb(146, 74, 29);
+  background-color: rgb(146, 74, 29);
 }
 
 .headerArea {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 2fr 0.7fr;
+  grid-template-columns: 1fr 2fr 3fr 1fr;
   gap: 10px;
-  width: 80%;
+  width: 100%;
   padding: 1vh;
 }
 
@@ -69,23 +62,24 @@
   display: flex;
   justify-content: flex-start;
   font-weight: bolder;
+  color: #643f39;
 }
 
 .companyArea {
   display: flex;
   flex-wrap: wrap;
   height: fit-content;
-  overflow: hidden;
+  /* overflow-y: scroll; */
   justify-content: center;
-  width: 100%;
+  width: 90%;
   margin-bottom: 3%;
 }
 
 .company {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 2fr 0.7fr;
+  grid-template-columns: 1fr 2fr 3fr 1fr;
   gap: 10px;
-  width: 80%;
+  width: 100%;
   height: auto;
   background-color: #ffffff;
   padding: 1vh;
@@ -100,7 +94,7 @@
 }
 
 .cNAME:hover {
-    color: rgba(122, 61, 150, 0.513);
+  color: rgba(122, 61, 150, 0.513);
 }
 
 .cURL {
@@ -135,8 +129,8 @@
 .crud {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  /* justify-content: center; */
+  gap: 2vh;
   padding: 0 1vh;
 }
 
@@ -151,6 +145,7 @@
   border-radius: 0.5vh;
   font-size: medium;
   font-weight: bold;
+  width: 7vh;
 }
 
 .delBtn {
@@ -164,6 +159,7 @@
   border-radius: 0.5vh;
   font-size: medium;
   font-weight: bold;
+  width: 7vh;
 }
 
 .crudBtn:hover {
