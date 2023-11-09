@@ -4,8 +4,6 @@
   top: 0;
   left: 0;
   background-color: #f1efdc;
-  /* z-index: 10;
-  opacity: 0.8; */
 }
 
 .closeMain {
@@ -13,14 +11,15 @@
 }
 
 .pageArea {
-  width: 80%;
+  width: 60%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin: 0 10%;
+  margin: 0 20%;
   height: 95vh;
-  background-color: rgba(221, 230, 230, 0.807);
+  background-color: rgb(172, 205, 207);
   z-index: 20;
+  border-radius: 1vh;
 }
 
 .titleArea {
@@ -32,6 +31,7 @@
   justify-content: center;
   align-items: center;
   padding: 1vh;
+  border-radius: 1vh 1vh 0 0;
 }
 
 .title {
@@ -85,7 +85,9 @@
 .eachTitle {
   display: flex;
   align-items: center;
-  width: 15vh;
+  width: 12vh;
+  color: rgb(85, 46, 33);
+  font-size: large;
 }
 
 .input {

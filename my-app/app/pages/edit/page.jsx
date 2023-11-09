@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Estyle from '../../styles/edit.module.css';
-// import Astyle from '../../styles/newdata.module.css';
+import Swal from 'sweetalert2';
 import { ChangeEvent } from 'react';
 import dynamic from 'next/dynamic'; // lazy loading->先不要rendor直到client點擊
 
@@ -60,31 +60,50 @@ export default function Edit() {
   const route = useRouter();
 
   async function handleDelBtn(company_id) {
-    // API endpoint where we send request.
+    // API endpoint where we send the request.
     const endpoint = `http://192.168.70.25:8000/DeleteCompany/?cid=${company_id}`;
-
+  
     // Form the request for sending data to the server.
     const options = {
-      // The method is POST because we are sending data.
-      method: 'DELETE',
-      // Tell the server we're sending JSON.
+      method: 'DELETE', // The method is DELETE because we're deleting data.
       headers: {
-        'Content-Type': 'application/json'
-      }
-      // Body of the request is the JSON data we created above.
+        'Content-Type': 'application/json', // Tell the server we're sending JSON.
+      },
     };
-    if (confirm('是否確認刪除此筆資料？')) {
-      const response = await fetch(endpoint, options);
-      if (response.ok) {
-        alert(`刪除成功!`);
-        // route.push('/pages/edit');
-        setClickBtn(() => !clickBtn);
-      } else {
-        const errorMsg = await response.json();
-        alert(`刪除失敗：${errorMsg}`);
+  
+    try {
+      const result = await Swal.fire({
+        title: `是否確認刪除"${cdata.filter((data) => data.company_id == company_id)[0].name}"？`,
+        text: "刪除後無法復原",
+        icon: "warning",
+        showConfirmButton: "true",
+        confirmButtonColor: "rgb(109 81 146)",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+        showCancelButton: true, // Add this to show the Cancel button.
+      });
+  
+      if (result.isConfirmed) {
+        const response = await fetch(endpoint, options);
+        if (response.ok) {
+          Swal.fire({
+            title: "Deleted!",
+            text: `已成功刪除：${cdata.filter((data) => data.company_id == company_id)[0].name}`,
+            icon: "success",
+          });
+          setClickBtn(() => !clickBtn);
+        } else {
+          const errorMsg = await response.json();
+          Swal.fire({
+            title: "Oops!",
+            text: `刪除失敗：${errorMsg}`,
+            icon: "error",
+          });
+        }
       }
-    } else {
-      ('已取消！');
+    } catch (error) {
+      // Handle errors here.
+      console.error("Error:", error);
     }
   }
 
